@@ -112,12 +112,12 @@ export function MindMapWorkspace() {
   }, [authLoading, user, router]);
 
   useEffect(() => {
-    let mounted = true;
+    const ref = { mounted: true };
 
     async function loadMaps() {
       try {
         const loadedMaps = await mindMapStore.list();
-        if (!mounted) {
+        if (!ref.mounted) {
           return;
         }
         setMaps(loadedMaps);
@@ -125,13 +125,14 @@ export function MindMapWorkspace() {
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Não foi possível carregar os mapas.");
       } finally {
-        if (mounted) {
+        if (ref.mounted) {
           setLoading(false);
         }
       }
     }
 
     loadMaps();
+    return () => { ref.mounted = false; };
   }, [user]);
 
   const activeMap = useMemo(

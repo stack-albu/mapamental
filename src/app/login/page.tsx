@@ -51,8 +51,8 @@ export default function LoginPage() {
       // Usamos window.location.href em vez de router.push para limpar o cache 
       // severo do Next.js e forçar o middleware a ler os novos cookies recém-criados.
       window.location.href = "/";
-    } catch (err: any) {
-      setError(err.message || "Erro de autenticação");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Erro de autenticação");
       setLoading(false);
     }
   };

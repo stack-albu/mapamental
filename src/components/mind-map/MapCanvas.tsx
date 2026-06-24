@@ -104,7 +104,7 @@ export function MapCanvas({ map, selectedNodeId, onSelectNode, onChange, onViewp
 
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      const positionChanges = changes.filter(c => c.type === 'position' && c.dragging) as any[];
+      const positionChanges = changes.filter(c => c.type === 'position' && (c as { dragging?: boolean }).dragging) as { id: string; position?: { x: number; y: number } }[];
       let nextNodes = applyNodeChanges(changes, nodes) as MindMapNode[];
       
       // Aplicar drag a todos os descendentes
@@ -296,7 +296,7 @@ export function MapCanvas({ map, selectedNodeId, onSelectNode, onChange, onViewp
     }
   }, [editingNodeId, addChildNode, addSiblingNode, deleteSelectedNode, selectedNodeId, onSelectNode]);
 
-  const onMoveEnd = useCallback((_event?: any, vp?: any) => {
+  const onMoveEnd = useCallback((_event?: unknown, vp?: { x: number; y: number; zoom: number }) => {
     if (vp && onViewportChange) {
       onViewportChange({ x: vp.x, y: vp.y, zoom: vp.zoom });
     }

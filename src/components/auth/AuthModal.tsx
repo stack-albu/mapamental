@@ -44,8 +44,8 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
       }
       onSuccess();
       onClose();
-    } catch (err: any) {
-      setError(err.message || "Erro de autenticação");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Erro de autenticação");
     } finally {
       setLoading(false);
     }
