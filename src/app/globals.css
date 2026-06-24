@@ -1,0 +1,179 @@
+@import "@xyflow/react/dist/style.css";
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171713;
+  --muted: #716c61;
+  --line: #e2e8f0;
+  --panel: #f8fafc;
+  --panel-strong: #f1f5f9;
+  --sidebar-bg: #111827;
+  --sidebar-fg: #f3f4f6;
+  --sidebar-hover: #1f2937;
+  --sidebar-active: #2563eb;
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --green: #10b981;
+  --blue: #3b82f6;
+  --brown: #8b5cf6;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #0f0f11;
+  --foreground: #f3f4f6;
+  --muted: #9ca3af;
+  --line: #1f2937;
+  --panel: #111827;
+  --panel-strong: #1f2937;
+  --sidebar-bg: #0a0a0d;
+  --sidebar-fg: #e5e7eb;
+  --sidebar-hover: #1f2937;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.react-flow {
+  background: var(--panel);
+}
+
+.react-flow__controls {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid var(--line);
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.react-flow__handle,
+.mind-map-handle {
+  opacity: 0 !important;
+  pointer-events: all;
+}
+
+.mind-map-flow .react-flow__node {
+  background: transparent;
+}
+
+.mind-map-flow .react-flow__edge-path {
+  filter: none;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.mind-map-flow .react-flow__edge:hover .react-flow__edge-path {
+  opacity: 1;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* ─── Node interaction improvements ─── */
+
+/* Hide add/sibling buttons by default, show on hover */
+.mm-node .mm-add-child-btn,
+.mm-node .mm-add-sibling-btn {
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.mm-node:hover .mm-add-child-btn,
+.mm-node:hover .mm-add-sibling-btn,
+.react-flow__node.selected .mm-add-child-btn,
+.react-flow__node.selected .mm-add-sibling-btn {
+  opacity: 1;
+}
+
+/* Collapse button: always visible when children exist, subtle by default */
+.mm-collapse-btn {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Toolbar smooth entry */
+.mm-node-toolbar {
+  animation: toolbar-enter 0.15s ease-out both;
+}
+
+@keyframes toolbar-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Node selection ring animation */
+.mm-node-root {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Smooth cursor for editable text */
+.mm-node span.cursor-text {
+  cursor: text;
+  user-select: none;
+}
+
+/* Better input focus state */
+.mm-node input {
+  border-radius: 4px;
+  padding: 1px 4px;
+  margin: -1px -4px;
+  transition: background-color 0.15s ease;
+}
+
+.mm-node input:focus {
+  background-color: rgba(37, 99, 235, 0.06);
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-enter {
+  animation: enter 360ms ease both;
+}
